@@ -1,0 +1,84 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import useFormHook from "@/hooks/use-form-hook";
+import { UseFormReturn } from "react-hook-form";
+import CountryFlag from "@/lib/helper";
+import { z } from "zod";
+
+const resetPasswordSchema = z.object({
+  phone_number: z.string().min(1),
+  country_code: z.string().min(1),
+});
+
+export type ResetPasswordProps = z.infer<typeof resetPasswordSchema>;
+
+export default function CountrySelect({form, codeError, setCodeError}: {form: UseFormReturn<ResetPasswordProps>, codeError:boolean, setCodeError: React.Dispatch<React.SetStateAction<boolean>>}) {
+  const [selected, setSelected] = useState<string>("");
+  const { countries } = useFormHook();
+
+    const code = form.getValues("country_code");
+    useEffect(() => {
+        if(code){
+          setCodeError(false);
+        }
+        
+      }, [code, setCodeError]);
+
+
+  return (
+    <div className="space-y-2">
+      <Select 
+      value={selected} 
+    //   onValueChange={setSelected}
+     onValueChange={(value) => {
+        const selectedValue = countries.find((c) => c.countryCode === value);
+        setSelected(value);
+        if (selectedValue) {
+          form.setValue("country_code", `+${selectedValue.phonecode}`);
+        }
+      }}
+      >
+        <SelectTrigger className={`"w-[130px] py-5 ${codeError ? " border border-red-500" : ""}`}>
+          {!selected && (
+            <SelectValue className="text-xs" placeholder="country code" />
+          )}
+          {selected && (
+            <div className="flex items-center gap-2">
+              <CountryFlag
+                code={
+                  countries.find((c) => c.countryCode === selected)
+                    ?.countryCode || ""
+                }
+                size="w-5 h-5"
+              />
+              <span>
+                +{countries.find((c) => c.countryCode === selected)?.phonecode}
+              </span>
+            </div>
+          )}
+        </SelectTrigger>
+        <SelectContent>
+          {countries?.map((country) => (
+            <SelectItem key={country.countryCode} value={country.countryCode}>
+              <button onClick={() => form.setValue("country_code", country.phonecode)} className="flex items-center gap-2">
+                <CountryFlag code={country.countryCode} size="w-5 h-5" />
+                <span>{country.name}</span>
+                <span className="text-muted-foreground">
+                  (+{country.phonecode})
+                </span>
+              </button>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}

@@ -292,47 +292,41 @@
 //   );
 // };
 
+"use client";
 
-
-
-
-
-'use client';
-
-import React, { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Apple, Play, Mail, ArrowLeft, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import React, { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Apple, Play, Mail, ArrowLeft, ArrowRight } from "lucide-react";
+import Link from "next/link";
 // import userImage from '../../assets/images/phones.png';
-import one from '../../assets/images/slide 1.jpeg';
-import two from '../../assets/images/slide 2.jpeg';
-import three from '../../assets/images/slide 3.jpeg';
-import cities_logo from '../../assets/images/cities_logo.jpeg';
-import playstore from '../../assets/images/play_store.webp';
-import applestore from '../../assets/images/apple_store.webp';
-import 'animate.css';
-import AuthPageWrapper from '../auth/AuthPageWrapper';
-
+import one from "../../assets/images/slide 1.jpeg";
+import two from "../../assets/images/slide 2.jpeg";
+import three from "../../assets/images/slide 3.jpeg";
+import cities_logo from "../../assets/images/cities_logo.jpeg";
+import playstore from "../../assets/images/play_store.webp";
+import applestore from "../../assets/images/apple_store.webp";
+import "animate.css";
+import AuthPageWrapper from "../auth/AuthPageWrapper";
 
 export const GetStarted: React.FC = () => {
-    const textArray = ["3000 Counties", "2 million Cities", "50 million users"];
+  const textArray = ["3000 Counties", "2 million Cities", "50 million users"];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animate, setAnimate] = useState(false);
   const swiperRef = useRef(null); // Reference to Swiper instance
-  const intervalDelay = 5000; 
-    const [activeSlide, setActiveSlide] = useState(0);
+  const intervalDelay = 5000;
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const slides = [
     {
-      title: 'Connect with your city',
+      title: "Connect with your city",
       image: one.src,
     },
     {
-      title: 'Share your moments',
+      title: "Share your moments",
       image: two.src,
     },
     {
-      title: 'Build communities',
+      title: "Build communities",
       image: three.src,
     },
   ];
@@ -345,7 +339,7 @@ export const GetStarted: React.FC = () => {
     setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
-useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setAnimate(false); // Reset text animation
       setTimeout(() => {
@@ -356,7 +350,7 @@ useEffect(() => {
           }
           return nextIndex;
         });
-        handleNext()
+        handleNext();
         setAnimate(true); // Restart text animation
       }, 50); // Small delay to reset animation
     }, intervalDelay);
@@ -397,24 +391,25 @@ useEffect(() => {
                     </div>
                   </div>
           </div> */}
-                         <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden">
             <div className="relative h-full w-full">
               {slides.map((slide, index) => {
                 const isActive = index === activeSlide;
                 const isNext = index === (activeSlide + 1) % slides.length;
-                const isPrev = index === (activeSlide - 1 + slides.length) % slides.length;
+                const isPrev =
+                  index === (activeSlide - 1 + slides.length) % slides.length;
 
-                let position = 'translate-x-full opacity-0';
+                let position = "translate-x-full opacity-0";
                 let zIndex = 0;
 
                 if (isActive) {
-                  position = 'translate-x-0 opacity-100';
+                  position = "translate-x-0 opacity-100";
                   zIndex = 30;
                 } else if (isNext) {
-                  position = 'translate-x-full opacity-0';
+                  position = "translate-x-full opacity-0";
                   zIndex = 20;
                 } else if (isPrev) {
-                  position = '-translate-x-full opacity-0';
+                  position = "-translate-x-full opacity-0";
                   zIndex = 10;
                 }
 
@@ -433,76 +428,103 @@ useEffect(() => {
                   </div>
                 );
               })}
-           
-           
-             <div className="flex justify-center items-center gap-8 absolute z-99 w-full bottom-10">
-              <button
-                onClick={handlePrev}
-                className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
 
-                   <div className="flex justify-center gap-2">
-              {slides.map((_, index) => (
+              <div className="flex justify-center items-center gap-8 absolute z-99 w-full bottom-10">
                 <button
-                  key={index}
-                  onClick={() => setActiveSlide(index)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    index === activeSlide
-                      ? 'w-8 bg-white'
-                      : 'w-1.5 bg-white/40 hover:bg-white/60'
-                  }`}
-                />
-              ))}
-            </div>
-              <button
-                onClick={handleNext}
-                className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-            </div>
-        </div>
-
-               {/* Right Column */}
-          <div className="flex flex-col justify-between pl-12 pr-4 md:pl-16 md:pr-6 py-12 lg:py-16 text-center">
-            <div className='flex items-center gap-4'>
-              {/* <h2 className="text-2xl lg:text-3xl font-bold mb-2">C Cities Web App</h2> */}
-              <div className='w-12 h-12 rounded-full overflow-hidden'>
-               <img
-                      src={cities_logo.src}
-                      alt="Cities Logo"
-                      className="w-full h-full object-cover object-center"
+                  onClick={handlePrev}
+                  className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
                     />
+                  </svg>
+                </button>
+
+                <div className="flex justify-center gap-2">
+                  {slides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveSlide(index)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        index === activeSlide
+                          ? "w-8 bg-white"
+                          : "w-1.5 bg-white/40 hover:bg-white/60"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <button
+                  onClick={handleNext}
+                  className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
               </div>
-                    <h2 className="text-2xl lg:text-3xl font-bold mb-2">Cities Web App</h2>
+            </div>
+          </div>
+
+          {/* Right Column */}
+          <div className="flex flex-col justify-between pl-12 pr-4 md:pl-16 md:pr-6 py-12 lg:py-16 text-center">
+            <div className="flex items-center gap-4">
+              {/* <h2 className="text-2xl lg:text-3xl font-bold mb-2">C Cities Web App</h2> */}
+              <div className="w-12 h-12 rounded-full overflow-hidden">
+                <img
+                  src={cities_logo.src}
+                  alt="Cities Logo"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              <h2 className="text-2xl lg:text-3xl font-bold mb-2">
+                Shem Web App
+              </h2>
             </div>
 
             <div className="space-y-12">
               <div>
                 <h1 className="text-4xl font-bold text-gray-100 mb-8 leading-tight">
                   {/* Connect <span className="text-blue-600">Locally</span> */}
-                  Next Gen AI Social Network App powering over <span
-         className={` text-blue-500 inline-block text-outline-white-sm ${
-          animate ? "animate__animated animate__slideInUp" : ""
-        }`}
-      >
-        {textArray[currentIndex]}
-      </span>
+                  Smart Referral & Registration Platform{" "}
+                  <span
+                    className={` text-blue-500 inline-block text-outline-white-sm ${
+                      animate ? "animate__animated animate__slideInUp" : ""
+                    }`}
+                  >
+                    {textArray[currentIndex]}
+                  </span>
                 </h1>
                 <p className="text-gray-200 text-lg lg:text-xl leading-relaxed">
-                  Connect locally, engage meaningfully, and discover your community. Share what matters and build lasting relationships.
+                  A modern referral and registration platform built for fast,
+                  seamless onboarding, and discover your community. Share what
+                  matters and build lasting relationships.
                 </p>
               </div>
 
-                                    <div className="space-y-3 max-w-md mx-auto mt-20">
-                <Link href='/register/account-type' className="w-full bg-white hover:bg-gray-100 text-slate-900 rounded-full py-2 text-lg font-bold transition-all hover:shadow-lg flex items-center justify-center gap-2">
+              <div className="space-y-3 max-w-md mx-auto mt-20">
+                <Link
+                  href="/register/account-type"
+                  className="w-full bg-white hover:bg-gray-100 text-slate-900 rounded-full py-2 text-lg font-bold transition-all hover:shadow-lg flex items-center justify-center gap-2"
+                >
                   <ArrowLeft className="w-5 h-5" />
                   Get started
                 </Link>
@@ -516,31 +538,41 @@ useEffect(() => {
                 </Link>
               </div>
 
-            <div className="flex justify-center gap-4 mt-8">
-                  <a 
-                    href="#"
-                  >
-                    <div className='w-46 h-12'>
-                    <img src={applestore.src} alt="Download on the App Store" className='w-full h-full rounded' />
-                    </div>
-                  </a>
-                  
-                  <a 
-                    href="#"
-                  >
-                    <div className='w-46 h-12'>
-                  <img src={playstore.src} alt="Get it on Google Play" className='w-full h-full rounded' />
-                    </div>
-                  </a>
-                </div>
+              <div className="flex justify-center gap-4 mt-8">
+                <a href="#">
+                  <div className="w-46 h-12">
+                    <img
+                      src={applestore.src}
+                      alt="Download on the App Store"
+                      className="w-full h-full rounded"
+                    />
+                  </div>
+                </a>
+
+                <a href="#">
+                  <div className="w-46 h-12">
+                    <img
+                      src={playstore.src}
+                      alt="Get it on Google Play"
+                      className="w-full h-full rounded"
+                    />
+                  </div>
+                </a>
+              </div>
             </div>
 
             <div className="flex items-center justify-center gap-4 text-slate-500 text-sm mt-4">
-              <a href="#" className="hover:text-slate-800 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">
+                Privacy
+              </a>
               <span>•</span>
-              <a href="#" className="hover:text-slate-800 transition-colors">Terms</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">
+                Terms
+              </a>
               <span>•</span>
-              <a href="#" className="hover:text-slate-800 transition-colors">Contact</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">
+                Contact
+              </a>
             </div>
           </div>
         </div>
@@ -555,41 +587,42 @@ useEffect(() => {
             <p className="text-slate-400 text-sm">AI social network for counties</p>
           </div> */}
 
-          <div className='flex items-center gap-2 mb-8'>
-              <div className='w-10 h-10 rounded-full overflow-hidden'>
-               <img
-                      src={cities_logo.src}
-                      alt="Cities Logo"
-                      className="w-full h-full object-cover object-center"
-                    />
-              </div>
-                    <h2 className="text-2xl font-bold mb-2">Cities Web App</h2>
+          <div className="flex items-center gap-2 mb-8">
+            <div className="w-10 h-10 rounded-full overflow-hidden">
+              <img
+                src={cities_logo.src}
+                alt="Cities Logo"
+                className="w-full h-full object-cover object-center"
+              />
             </div>
+            <h2 className="text-2xl font-bold mb-2">Shem Web App</h2>
+          </div>
 
           {/* Image Section */}
-         {/* <img
+          {/* <img
                 src={userImage.src}
                 alt="Community connection illustration"
                 className="w-full h-full object-contain"
               /> */}
-               <div className="w-full max-w-lg mx-auto relative">
+          <div className="w-full max-w-lg mx-auto relative">
             <div className="relative h-96 mb-8 perspective">
-                        {slides.map((slide, index) => {
+              {slides.map((slide, index) => {
                 const isActive = index === activeSlide;
                 const isNext = index === (activeSlide + 1) % slides.length;
-                const isPrev = index === (activeSlide - 1 + slides.length) % slides.length;
+                const isPrev =
+                  index === (activeSlide - 1 + slides.length) % slides.length;
 
-                let position = 'translate-x-full opacity-0';
+                let position = "translate-x-full opacity-0";
                 let zIndex = 0;
 
                 if (isActive) {
-                  position = 'translate-x-0 opacity-100';
+                  position = "translate-x-0 opacity-100";
                   zIndex = 30;
                 } else if (isNext) {
-                  position = 'translate-x-full opacity-0';
+                  position = "translate-x-full opacity-0";
                   zIndex = 20;
                 } else if (isPrev) {
-                  position = '-translate-x-full opacity-0';
+                  position = "-translate-x-full opacity-0";
                   zIndex = 10;
                 }
 
@@ -625,102 +658,136 @@ useEffect(() => {
                   </div>
                 );
               })}
-           
-           
-             <div className="flex justify-center items-center gap-8 absolute z-99 w-full bottom-10">
-              <button
-                onClick={handlePrev}
-                className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
 
-                   <div className="flex justify-center gap-2">
-              {slides.map((_, index) => (
+              <div className="flex justify-center items-center gap-8 absolute z-99 w-full bottom-10">
                 <button
-                  key={index}
-                  onClick={() => setActiveSlide(index)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    index === activeSlide
-                      ? 'w-8 bg-white'
-                      : 'w-1.5 bg-white/40 hover:bg-white/60'
-                  }`}
-                />
-              ))}
+                  onClick={handlePrev}
+                  className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+
+                <div className="flex justify-center gap-2">
+                  {slides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveSlide(index)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        index === activeSlide
+                          ? "w-8 bg-white"
+                          : "w-1.5 bg-white/40 hover:bg-white/60"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <button
+                  onClick={handleNext}
+                  className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-              <button
-                onClick={handleNext}
-                className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center text-white"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-            </div>
-        </div>
+          </div>
 
           {/* Content */}
           <div className="flex-1 space-y-8 mt-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-100 mb-4">
-                Next Gen AI Social Network App powering over <span
-         className={` text-blue-500 inline-block text-outline-white-sm ${
-          animate ? "animate__animated animate__slideInUp" : ""
-        }`}
-      >
-        {textArray[currentIndex]}
-      </span>
+                Smart Referral & Registration Platform{" "}
+                <span
+                  className={` text-blue-500 inline-block text-outline-white-sm ${
+                    animate ? "animate__animated animate__slideInUp" : ""
+                  }`}
+                >
+                  {textArray[currentIndex]}
+                </span>
               </h1>
               <p className="text-gray-200 text-lg">
-                 Connect locally, engage meaningfully, and discover your community. Share what matters and build lasting relationships.
+                Connect locally, engage meaningfully, and discover your
+                community. Share what matters and build lasting relationships.
               </p>
             </div>
 
-                                    <div className="space-y-3 max-w-md flex flex-col items-center justify-center w-full">
-                <Link href='/register/account-type' className="w-full bg-white hover:bg-gray-100 text-slate-900 rounded-full py-2 text-lg font-bold transition-all hover:shadow-lg flex items-center justify-center gap-2">
-                  <ArrowLeft className="w-5 h-5" />
-                  Get started
-                </Link>
+            <div className="space-y-3 max-w-md flex flex-col items-center justify-center w-full">
+              <Link
+                href="/register/account-type"
+                className="w-full bg-white hover:bg-gray-100 text-slate-900 rounded-full py-2 text-lg font-bold transition-all hover:shadow-lg flex items-center justify-center gap-2"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                Get started
+              </Link>
 
-                <Link
-                  href="/login"
-                  className="w-full bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-full py-2 text-lg font-semibold transition-all flex items-center justify-center gap-2"
-                >
-                  I already have an account
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+              <Link
+                href="/login"
+                className="w-full bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-full py-2 text-lg font-semibold transition-all flex items-center justify-center gap-2"
+              >
+                I already have an account
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
 
             <div className="flex justify-center gap-4">
-                  <a 
-                    href="#"
-                  >
-                    <div className='w-40 h-10'>
-                    <img src={applestore.src} alt="Download on the App Store" className='w-full h-full rounded' />
-                    </div>
-                  </a>
-                  
-                  <a 
-                    href="#"
-                  >
-                    <div className='w-40 h-10'>
-                  <img src={playstore.src} alt="Get it on Google Play" className='w-full h-full rounded' />
-                    </div>
-                  </a>
+              <a href="#">
+                <div className="w-40 h-10">
+                  <img
+                    src={applestore.src}
+                    alt="Download on the App Store"
+                    className="w-full h-full rounded"
+                  />
                 </div>
+              </a>
+
+              <a href="#">
+                <div className="w-40 h-10">
+                  <img
+                    src={playstore.src}
+                    alt="Get it on Google Play"
+                    className="w-full h-full rounded"
+                  />
+                </div>
+              </a>
+            </div>
           </div>
 
           {/* Footer Links */}
           <div className="mt-12 pt-6 border-t border-slate-600">
             <div className="flex items-center justify-center gap-4 text-slate-500 text-sm">
-              <a href="#" className="hover:text-slate-800 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">
+                Privacy
+              </a>
               <span>•</span>
-              <a href="#" className="hover:text-slate-800 transition-colors">Terms</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">
+                Terms
+              </a>
               <span>•</span>
-              <a href="#" className="hover:text-slate-800 transition-colors">Contact</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">
+                Contact
+              </a>
             </div>
           </div>
         </div>
